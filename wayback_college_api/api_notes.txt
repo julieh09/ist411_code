@@ -1,0 +1,2 @@
+College Database API: http://universities.hipolabs.com/search?country=United+States
+Wayback Machine API: https://archive.org/wayback/available?url=example.com
