@@ -9,12 +9,13 @@
     <title>Two APIs - Wayback Machine and College Database API</title>
 </head>
 <body>
-    <h1>Learn some fun information about college's in the United States!</h1>
+    <h1>See what a college's website has looked like through the years!</h1>
     <select id="collegeDropdown" onchange="setTableContent();"></select>
+    <select id="yearDropdown" onchange="setIframeContent();"></select>
     <br>
     <table id="collegeTable"></table>
     <br>
-    <iframe src="https://web.archive.org/web/20211013001036/https://www.psu.edu/" width="100%" height="600" style="border:1px solid black;"></iframe>
+    <div id="iframeDiv"></div>
 
     <script src="wayback_college_api.js" defer></script>
 </body>
