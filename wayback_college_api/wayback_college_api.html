@@ -10,9 +10,21 @@
 </head>
 <body>
     <h1>See what a college's website has looked like through the years!</h1>
-    <select id="collegeDropdown" onchange="setTableContent();"></select>
-    <select id="yearDropdown" onchange="setIframeContent();"></select>
+    <select id="collegeDropdown"></select>
+    <input type="text" id="yearTextBox" placeholder="Enter a year from 1996 to 2021"></input>
     <br>
+    <h4>Select columns to displayed in table:</h4>
+    <form id="tableControl">
+        <input type="checkbox" id="alpha_two_code" checked>alpha_two_code</input>
+        <input type="checkbox" id="web_pages" checked>web_pages</input>
+        <input type="checkbox" id="name" checked>name</input>
+        <input type="checkbox" id="country" checked>country</input>
+        <input type="checkbox" id="domains" checked>domains</input>
+        <input type="checkbox" id="state-province" checked>state-province</input>
+    </form>
+    <br>
+    <button onclick="setTableContent(); setIframeContent();">Submit</button>
+    <br><br>
     <table id="collegeTable"></table>
     <br>
     <div id="iframeDiv"></div>

@@ -1,22 +1,25 @@
 const xhttpCollege = new XMLHttpRequest();
-
 let collegeData = [];
-let yearData = ["1996", "1997", "1998", "1999",
-    "2000", "2001", "2002", "2003", "2004", "2005", "2006",
-    "2007", "2008", "2009", "2010", "2011", "2012", "2013", 
-    "2014", "2015", "2016", "2017", "2018", "2019", "2020",
-    "2021"
-];
 
 function setTableContent() {
     let selectedCollege = document.getElementById("collegeDropdown");
+    let checkBoxArray = [
+        document.querySelector("#alpha_two_code").checked,
+        document.querySelector("#web_pages").checked,
+        document.querySelector("#name").checked,
+        document.querySelector("#country").checked,
+        document.querySelector("#domains").checked,
+        document.querySelector("#state-province").checked
+    ];
     
     for (let i=0; i < collegeData.length; i++) {
         if (collegeData[i].name == selectedCollege.value) {
             let headerRow = document.createElement('tr');
             let dataRow = document.createElement('tr');
 
+            j = 0
             for (const key in collegeData[i]) {
+                if (checkBoxArray[j] == true ) {
                 let headerData = document.createElement('th');
                 let headerText = document.createTextNode(key);
                 headerData.appendChild(headerText);
@@ -26,20 +29,21 @@ function setTableContent() {
                 let data_text = document.createTextNode(collegeData[i][key]);
                 data_data.appendChild(data_text);
                 dataRow.appendChild(data_data);
+                }
+
+                j += 1;
             }
 
             document.querySelector("#collegeTable").innerHTML = "";
             document.querySelector("#collegeTable").appendChild(headerRow);
             document.querySelector("#collegeTable").appendChild(dataRow);
-            setIframeContent();
-
         }
     }
 }
 
 function setIframeContent() {
     let selectedCollege = document.getElementById("collegeDropdown");
-    let selectedYear = document.getElementById("yearDropdown");
+    let selectedYear = document.getElementById("yearTextBox");
 
     for (let i=0; i<collegeData.length; i++) {
         if (collegeData[i].name == selectedCollege.value) {
@@ -53,31 +57,39 @@ function setIframeContent() {
                 waybackData = JSON.parse(this.responseText);
 
                 if (this.status == 200) {
-                    if (selectedYear.value != waybackData.archived_snapshots.closest.timestamp.substr(0, 4)) {
-                        let headerData = document.createElement('h3');
-                        let headerText = document.createTextNode(`No website found for ${selectedCollege.value} in ${selectedYear.value}`);
-
-                        headerData.appendChild(headerText);
-                        document.querySelector("#iframeDiv").appendChild(headerData);
+                    if (parseInt(selectedYear.value) >= 1996 && parseInt(selectedYear.value) <= 2021) {
+                        if (selectedYear.value != waybackData.archived_snapshots.closest.timestamp.substr(0, 4)) {
+                            let headerData = document.createElement('h3');
+                            let headerText = document.createTextNode(`No website found for ${selectedCollege.value} in ${selectedYear.value}`);
+    
+                            headerData.appendChild(headerText);
+                            document.querySelector("#iframeDiv").appendChild(headerData);
+    
+                        } else {
+                            console.log(`${this.status} -- successfully queried Wayback Machine API for timestamp ${selectedYear.value}`);
+                            let headerData = document.createElement('h3');
+                            let iframe = document.createElement('iframe');
+                            let pageBreak = document.createElement('br');
+    
+                            let headerText = document.createTextNode(`What ${selectedCollege.value}'s website looked like in ${selectedYear.value}`)
+                            headerData.appendChild(headerText);
+    
+                            iframe.setAttribute("src", waybackData.archived_snapshots.closest.url);
+                            iframe.setAttribute("width", "100%");
+                            iframe.setAttribute("height", "800px");
+    
+                            document.querySelector("#iframeDiv").appendChild(headerData);
+                            document.querySelector("#iframeDiv").appendChild(iframe);
+                            document.querySelector("#iframeDiv").appendChild(pageBreak);
+                        }
 
                     } else {
-                        console.log(`${this.status} -- successfully queried Wayback Machine API for timestamp ${selectedYear.value}`);
                         let headerData = document.createElement('h3');
-                        let iframe = document.createElement('iframe');
-                        let pageBreak = document.createElement('br');
+                        let headerText = document.createTextNode(`Invalid date specified. Please enter date between 1996 and 2021.`);
 
-                        let headerText = document.createTextNode(`What ${selectedCollege.value}'s website looked like in ${selectedYear.value}`)
                         headerData.appendChild(headerText);
-
-                        iframe.setAttribute("src", waybackData.archived_snapshots.closest.url);
-                        iframe.setAttribute("width", "100%");
-                        iframe.setAttribute("height", "800px");
-
                         document.querySelector("#iframeDiv").appendChild(headerData);
-                        document.querySelector("#iframeDiv").appendChild(iframe);
-                        document.querySelector("#iframeDiv").appendChild(pageBreak);
                     }
-
                 } else {
                     console.log(`${this.status} -- error querying Wayback Machine API`);
                 }
@@ -120,10 +132,6 @@ xhttpCollege.onload = function() {
         for (let i=0; i < collegeData.length; i++) {
             setCollegeDropdownContent("#collegeDropdown", collegeData[i].name);
         }
-
-        setYearDropdownContent("#yearDropdown", yearData);
-        setTableContent();
-
     } else {
         console.log(`${this.status} -- error querying US college API`);
     }
