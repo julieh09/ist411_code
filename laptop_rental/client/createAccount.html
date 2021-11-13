@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partner Lab 3</title>
-    <link rel="stylesheet" href="styles.css"/>
+    <meta name="author" content="Jason C. Nucciarone, Julie Ho">
+    <meta name="description" content="Create account for Rent-a-Laptop">
+    <title>Rent-a-Laptop</title>
 </head>
 <body>
-    
     <div class="div">
         <div class="builder-columns columns">
           <div class="builder-column column">
@@ -20,18 +20,14 @@
               <div class="div-3">
                 <div class="div-4"><p>Create an account</p></div>
       
-                <input
-                  type="text"
-                  placeholder="Create username"
-                  class="input"
-                ></input>
+                <input type="text" placeholder="Create username" class="input" id="createUserTextBox"></input>
       
-                <button class="button">Create account</button>
+                <button class="button" onclick="createAccount();">Create account</button>
               
                 <div class="div-5">
                   <div class="already-have-an-account">Already have an account?</div>
       
-                  <button class="button-2">Log In</button>
+                  <button class="button-2" onclick="swapPage('index.html')">Log In</button>
                 </div>
               </div>
             </div>
@@ -194,6 +190,6 @@
           background-color: rgba(150, 190, 230, 1);
         }
       </style>
-
+      <script src="client.js" defer></script>
 </body>
 </html>
