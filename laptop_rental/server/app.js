@@ -87,8 +87,34 @@ app.get("/logout", (req, res) => {
     res.send("200 OK.");
 });
 
+// Return the user currently logged into the system
 app.get("/currentuser", (req, res) => {
     res.send(currentUser);
+});
+
+// Create reservation
+app.post("/createReservation/:laptop/:date/:time/:hoursMax", (req, res) => {
+
+});
+
+// Update reservation
+app.post("/updateReservation/:newLaptop/:newDate/:newTime/:newHoursMax", (req, res) => {
+
+});
+
+// Delete reservation
+app.delete("/deleteReservation", (req, res) => {
+
+});
+
+// View reservation
+app.get("/viewReservation", (req, res) => {
+
+});
+
+// View all reservations
+app.get("/viewAllReservations", (req, res) => {
+
 });
 
 // Start server
