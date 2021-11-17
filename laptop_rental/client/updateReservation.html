@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Reservation</title>
+</head>
+<body>
+  <button class="backButton">Back</button>
+  <div class="box">
+  <div class="div"><h2>Update Reservation</h2></div>
+  <div class="div-2">  
+    <h2 id="userNameBanner"></h2>
+    <script> 
+    getCurrentUser();
+    document.querySelector("#userNameBanner").innerHTML = currentUser;
+    </script>
+    </div>
+  <div class="laptop">
+        <label>Select Laptop:</label>
+        <select name="laptops" id="laptops">
+            <option value="macbookPro">Macbook Pro</option>
+            <option value="dell">Dell</option>
+            <option value="windowsSurface">Windows Surface Pro</option>
+            <option value="hp">HP</option>
+          </select>
+      </div>
+  <div class="start-date">
+        <label>Input reservation start time:</label>
+        <input type="time" id="time" name="time" min="09:00" max="19:00" required>
+    </div>
+    <div class="start-time">
+        <label>Input number of hours renting</label>
+        <input type="number" placeholder="Hours Renting (max 24)" id="numHours" name="numHours" min="1" max="24">
+    </div>  
+  <button class="updateReservation">Update Reservation</button>
+</div>
+
+<style>
+   body {
+    background-color: rgba(150, 190, 230, 1);
+   }
+  .backButton {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 20px;
+    appearance: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    background-color: rgba(189, 190, 190, 1);
+    color: rgb(0, 0, 0);
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: auto;
+  }
+  .box {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 20px;
+    height: auto;
+    background-color: rgba(255, 255, 255, 1);
+    padding-bottom: 30px;
+    padding-left: 200px;
+    padding-right: 200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .div {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 20px;
+    line-height: normal;
+    height: auto;
+    text-align: center;
+  }
+  .div-2 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 20px;
+    height: auto;
+    padding-bottom: 30px;
+    background-color: rgb(212, 212, 212);
+    line-height: normal;
+    text-align: center;
+  }
+  .laptop {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 20px;
+    height: auto;
+    background-color: rgba(150, 190, 230, 1);
+    padding-bottom: 30px;
+  }
+  .start-date {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 20px;
+    height: auto;
+    background-color: rgba(150, 190, 230, 1);
+    padding-bottom: 30px;
+  }
+  .start-time {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 20px;
+    height: auto;
+    background-color: rgba(150, 190, 230, 1);
+    padding-bottom: 30px;
+  }
+  .updateReservation {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 20px;
+    appearance: none;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+    background-color: rgb(255, 219, 100);
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    cursor: pointer;
+    align-items: center;
+  }
+
+</style>
+</body>
+</html>
