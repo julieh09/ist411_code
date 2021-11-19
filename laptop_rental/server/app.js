@@ -182,10 +182,17 @@ app.get("/viewReservation", (req, res) => {
 app.get("/viewAllReservations", (req, res) => {
     console.log(`Received request to view all reservations from ${currentUser}.`);
 
-    // Sort array by date and start time in descending order
+    // Sort array by start date in descending order
     data.resList.sort((res1, res2) => {
         return new Date(res1.start_date) - new Date(res2.start_date);
     });
+
+    // Sort array by time if date is the same
+    data.resList.sort((res1, res2) => {
+        if (res1.start_date == res2.start_date) {
+            return res1.start_time.localeCompare(res2.start_time);
+        }
+    })
 
     res.send({"data": data.resList});
 });
