@@ -53,7 +53,200 @@ function getCurrentUser() {
     currentUser = xhttpGetCurrentUser.responseText;
 }
 
+function createReservation() {
+    const xhttpCreateReservation = new XMLHttpRequest();
+
+    laptop = document.getElementById("laptops");
+    date = document.getElementById("date");
+    time = document.getElementById("time");
+    numHours = document.getElementById("numHours");
+
+    xhttpCreateReservation.open("POST", `http://127.0.0.1:5000/createReservation/${laptop.value}/${date.value}/${time.value}/${numHours.value}`);
+    xhttpCreateReservation.send();
+
+    xhttpCreateReservation.onload = function() {
+        if (this.responseText == "200 OK.") {
+            let alert = document.createElement('div');
+            alert.setAttribute("class", "alert alert-success alert-dismissible");
+            let alertButton = document.createElement('button');
+            alertButton.setAttribute("type", "button");
+            alertButton.setAttribute("class", "btn-close");
+            alertButton.setAttribute("data-bs-dismiss", "alert");
+            let alertText = document.createTextNode("Successfully created reservation");
+            alert.appendChild(alertButton);
+            alert.appendChild(alertText);
+            document.querySelector("#alertBox").appendChild(alert);
+        
+        } else {
+            let alert = document.createElement('div');
+            alert.setAttribute("class", "alert alert-danger alert-dismissible");
+            let alertButton = document.createElement('button');
+            alertButton.setAttribute("type", "button");
+            alertButton.setAttribute("class", "btn-close");
+            alertButton.setAttribute("data-bs-dismiss", "alert");
+            let alertText = document.createTextNode("Failed to create reservation");
+            alert.appendChild(alertButton);
+            alert.appendChild(alertText);
+            document.querySelector("#alertBox").appendChild(alert);
+        }
+    }
+}
+
+function updateReservation() {
+    const xhttpUpdateReservation = new XMLHttpRequest();
+
+    laptop = document.getElementById("laptops");
+    date = document.getElementById("date");
+    time = document.getElementById("time");
+    numHours = document.getElementById("numHours");
+
+    xhttpUpdateReservation.open("POST", `http://127.0.0.1:5000/updateReservation/${laptop.value}/${date.value}/${time.value}/${numHours.value}`);
+    xhttpUpdateReservation.send();
+
+    xhttpUpdateReservation.onload = function() {
+        if (this.responseText == "200 OK.") {
+            let alert = document.createElement('div');
+            alert.setAttribute("class", "alert alert-success alert-dismissible");
+            let alertButton = document.createElement('button');
+            alertButton.setAttribute("type", "button");
+            alertButton.setAttribute("class", "btn-close");
+            alertButton.setAttribute("data-bs-dismiss", "alert");
+            let alertText = document.createTextNode("Successfully updated reservation");
+            alert.appendChild(alertButton);
+            alert.appendChild(alertText);
+            document.querySelector("#alertBox").appendChild(alert);
+
+        } else {
+            let alert = document.createElement('div');
+            alert.setAttribute("class", "alert alert-danger alert-dismissible");
+            let alertButton = document.createElement('button');
+            alertButton.setAttribute("type", "button");
+            alertButton.setAttribute("class", "btn-close");
+            alertButton.setAttribute("data-bs-dismiss", "alert");
+            let alertText = document.createTextNode("Failed to update reservation");
+            alert.appendChild(alertButton);
+            alert.appendChild(alertText);
+            document.querySelector("#alertBox").appendChild(alert);
+        }
+    }
+}
+
+function deleteReservation() {
+    const xhttpDeleteReservation = new XMLHttpRequest();
+
+    xhttpDeleteReservation.open("DELETE", "http://127.0.0.1:5000/deleteReservation");
+    xhttpDeleteReservation.send();
+
+    xhttpDeleteReservation.onload = function() {
+        if (this.responseText == "200 OK.") {
+            let alert = document.createElement('div');
+            alert.setAttribute("class", "alert alert-success alert-dismissible");
+            let alertButton = document.createElement('button');
+            alertButton.setAttribute("type", "button");
+            alertButton.setAttribute("class", "btn-close");
+            alertButton.setAttribute("data-bs-dismiss", "alert");
+            let alertText = document.createTextNode("Successfully deleted reservation");
+            alert.appendChild(alertButton);
+            alert.appendChild(alertText);
+            document.querySelector("#alertBox").appendChild(alert);
+
+        } else {
+            let alert = document.createElement('div');
+            alert.setAttribute("class", "alert alert-danger alert-dismissible");
+            let alertButton = document.createElement('button');
+            alertButton.setAttribute("type", "button");
+            alertButton.setAttribute("class", "btn-close");
+            alertButton.setAttribute("data-bs-dismiss", "alert");
+            let alertText = document.createTextNode("Failed to delete reservation");
+            alert.appendChild(alertButton);
+            alert.appendChild(alertText);
+            document.querySelector("#alertBox").appendChild(alert);
+        }
+    }
+
+}
+
+function viewReservation() {
+    const xhttpViewReservation = new XMLHttpRequest();
+
+    xhttpViewReservation.open("GET", "http://127.0.0.1:5000/viewReservation");
+    xhttpViewReservation.send();
+
+    xhttpViewReservation.onload = function() {
+        // Present date information to user by displaying as a modal
+        let dataArray = [];
+        dataArray.push(JSON.parse(this.responseText));
+        let newTable = tableBuilder(dataArray, ["Username", "Laptop", "Start Date", "Start Time", "# of Hours"]);
+        document.querySelector("#resultHeader").innerHTML = `${currentUser}'s Reservation`;
+        document.querySelector("#resultBody").innerHTML = "";
+        document.querySelector("#resultBody").appendChild(newTable);
+    }
+}
+
+function viewAllReservations() {
+    const xhttpViewAllReservations = new XMLHttpRequest();
+
+    xhttpViewAllReservations.open("GET", "http://127.0.0.1:5000/viewAllReservations");
+    xhttpViewAllReservations.send();
+
+    xhttpViewAllReservations.onload = function() {
+        resz = JSON.parse(this.responseText);
+        let newTable = tableBuilder(resz.data, ["Username", "Laptop", "Start Date", "Start Time", "# of Hours"]);
+        document.querySelector("#resultHeader").innerHTML = "All Reservations";
+        document.querySelector("#resultBody").innerHTML = "";
+        document.querySelector("#resultBody").appendChild(newTable);
+    }
+}
+
 // Function to modify the current view
 function swapPage(pageName) {
     location.href = pageName;
+}
+
+function tableBuilder(tableData, tableHeaders) {
+    // Create root node of table
+    let tableRoot = document.createElement('table');
+    tableRoot.setAttribute("class", "table");
+
+    // Create table header
+    let tableHeader = document.createElement('thead');
+    let tableHeaderRow = document.createElement('tr');
+    tableHeaders.forEach((elem) => {
+        let tableH = document.createElement('th');
+        let tableHText = document.createTextNode(elem);
+        tableH.appendChild(tableHText);
+        tableHeaderRow.appendChild(tableH);
+    });
+    tableHeader.appendChild(tableHeaderRow);
+    tableRoot.appendChild(tableHeader);
+
+    // Create table body
+    let tableBody = document.createElement('tbody');
+    tableData.forEach((elem) => {
+        let tableBodyRow = document.createElement('tr');
+        let name = document.createElement('td');
+        let nameText = document.createTextNode(elem.username);
+        name.appendChild(nameText);
+        let laptop = document.createElement('td');
+        let laptopText = document.createTextNode(elem.laptop);
+        laptop.appendChild(laptopText);
+        let startDate = document.createElement('td');
+        let startDateText = document.createTextNode(elem.start_date);
+        startDate.appendChild(startDateText);
+        let startTime = document.createElement('td');
+        let startTimeText = document.createTextNode(elem.start_time);
+        startTime.appendChild(startTimeText);
+        let numHours = document.createElement('td');
+        let numHoursText = document.createTextNode(elem.num_hours);
+        numHours.appendChild(numHoursText);
+        tableBodyRow.appendChild(name);
+        tableBodyRow.appendChild(laptop);
+        tableBodyRow.appendChild(startDate);
+        tableBodyRow.appendChild(startTime);
+        tableBodyRow.appendChild(numHours);
+        tableBody.appendChild(tableBodyRow);
+    });
+    tableRoot.appendChild(tableBody);
+
+    return tableRoot;
 }

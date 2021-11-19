@@ -87,8 +87,114 @@ app.get("/logout", (req, res) => {
     res.send("200 OK.");
 });
 
+// Return the user currently logged into the system
 app.get("/currentuser", (req, res) => {
     res.send(currentUser);
+});
+
+// Create reservation
+app.post("/createReservation/:laptop/:date/:time/:numHours", (req, res) => {
+    console.log(`Received request for reservation from ${currentUser}.`);
+    
+    // Array object to store reservation data
+    let resz = {
+        "username": currentUser,
+        "laptop": req.params.laptop,
+        "start_date": req.params.date,
+        "start_time": req.params.time,
+        "num_hours": req.params.numHours
+    }
+
+    // Check if the user already has a reservation
+    const userIndex = data.resList.findIndex((elem) => {elem.username == currentUser});
+
+    if (userIndex == -1) {
+        data.resList.push(resz);
+        dumpFlatFile(data);
+        res.send("200 OK.");
+
+    } else {
+        res.send("504 - USER ALREADY EXISTS.");
+    }
+});
+
+// Update reservation
+app.post("/updateReservation/:newLaptop/:newDate/:newTime/:newHoursMax", (req, res) => {
+    console.log(`Received request to update reservation from ${currentUser}.`);
+
+    // Updated reservation
+    let resz = {
+        "username": currentUser,
+        "laptop": req.params.newLaptop,
+        "start_date": req.params.newDate,
+        "start_time": req.params.newTime,
+        "num_hours": req.params.newHoursMax
+    }
+
+    // Locate users reservation
+    const userIndex = data.resList.findIndex((elem) => elem.username == currentUser);
+
+    if (userIndex != -1) {
+        data.resList[userIndex] = resz;
+        dumpFlatFile(data);
+        res.send("200 OK.");
+
+    } else {
+        res.send("504 - USER DOES NOT HAVE A RESERVATION");
+    }
+
+});
+
+// Delete reservation
+app.delete("/deleteReservation", (req, res) => {
+    console.log(`Received request to delete reservation from ${currentUser}.`);
+
+    // Locate users index
+    const userIndex = data.resList.findIndex((elem) => elem.username == currentUser);
+
+    if (userIndex != -1) {
+        data.resList.splice(userIndex, 1);
+        dumpFlatFile(data);
+        res.send("200 OK.");
+
+    } else {
+        res.send("504 - USER HAS NO RESERVATION TO DELETE");
+    }
+});
+
+// View reservation
+app.get("/viewReservation", (req, res) => {
+    console.log(`Received request to view reservation from ${currentUser}.`);
+
+    // Retreive user's index
+    const userIndex = data.resList.findIndex((elem) => elem.username == currentUser);
+
+    if (userIndex != -1) {
+        res.send(data.resList[userIndex]);
+
+    } else {
+        res.send("504 - USER HAS NO RESERVATION TO VIEW");
+    }
+
+});
+
+// View all reservations
+app.get("/viewAllReservations", (req, res) => {
+    console.log(`Received request to view all reservations from ${currentUser}.`);
+
+    // Sort array by start date in descending order
+    data.resList.sort((res1, res2) => {
+        return new Date(res1.start_date) - new Date(res2.start_date);
+    });
+
+    // Sort array by time if date is the same
+    data.resList.sort((res1, res2) => {
+        if (res1.start_date == res2.start_date) {
+            return res1.start_time.localeCompare(res2.start_time);
+        }
+    })
+
+    res.send({"data": data.resList});
 });
 
 // Start server
