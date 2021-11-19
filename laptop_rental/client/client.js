@@ -65,7 +65,30 @@ function createReservation() {
     xhttpCreateReservation.send();
 
     xhttpCreateReservation.onload = function() {
-        console.log(this.responseText);
+        if (this.responseText == "200 OK.") {
+            let alert = document.createElement('div');
+            alert.setAttribute("class", "alert alert-success alert-dismissible");
+            let alertButton = document.createElement('button');
+            alertButton.setAttribute("type", "button");
+            alertButton.setAttribute("class", "btn-close");
+            alertButton.setAttribute("data-bs-dismiss", "alert");
+            let alertText = document.createTextNode("Successfully created reservation");
+            alert.appendChild(alertButton);
+            alert.appendChild(alertText);
+            document.querySelector("#alertBox").appendChild(alert);
+        
+        } else {
+            let alert = document.createElement('div');
+            alert.setAttribute("class", "alert alert-danger alert-dismissible");
+            let alertButton = document.createElement('button');
+            alertButton.setAttribute("type", "button");
+            alertButton.setAttribute("class", "btn-close");
+            alertButton.setAttribute("data-bs-dismiss", "alert");
+            let alertText = document.createTextNode("Failed to create reservation");
+            alert.appendChild(alertButton);
+            alert.appendChild(alertText);
+            document.querySelector("#alertBox").appendChild(alert);
+        }
     }
 }
 
@@ -81,7 +104,30 @@ function updateReservation() {
     xhttpUpdateReservation.send();
 
     xhttpUpdateReservation.onload = function() {
-        console.log(this.responseText);
+        if (this.responseText == "200 OK.") {
+            let alert = document.createElement('div');
+            alert.setAttribute("class", "alert alert-success alert-dismissible");
+            let alertButton = document.createElement('button');
+            alertButton.setAttribute("type", "button");
+            alertButton.setAttribute("class", "btn-close");
+            alertButton.setAttribute("data-bs-dismiss", "alert");
+            let alertText = document.createTextNode("Successfully updated reservation");
+            alert.appendChild(alertButton);
+            alert.appendChild(alertText);
+            document.querySelector("#alertBox").appendChild(alert);
+
+        } else {
+            let alert = document.createElement('div');
+            alert.setAttribute("class", "alert alert-danger alert-dismissible");
+            let alertButton = document.createElement('button');
+            alertButton.setAttribute("type", "button");
+            alertButton.setAttribute("class", "btn-close");
+            alertButton.setAttribute("data-bs-dismiss", "alert");
+            let alertText = document.createTextNode("Failed to update reservation");
+            alert.appendChild(alertButton);
+            alert.appendChild(alertText);
+            document.querySelector("#alertBox").appendChild(alert);
+        }
     }
 }
 
@@ -92,7 +138,30 @@ function deleteReservation() {
     xhttpDeleteReservation.send();
 
     xhttpDeleteReservation.onload = function() {
-        console.log(this.responseText);
+        if (this.responseText == "200 OK.") {
+            let alert = document.createElement('div');
+            alert.setAttribute("class", "alert alert-success alert-dismissible");
+            let alertButton = document.createElement('button');
+            alertButton.setAttribute("type", "button");
+            alertButton.setAttribute("class", "btn-close");
+            alertButton.setAttribute("data-bs-dismiss", "alert");
+            let alertText = document.createTextNode("Successfully deleted reservation");
+            alert.appendChild(alertButton);
+            alert.appendChild(alertText);
+            document.querySelector("#alertBox").appendChild(alert);
+
+        } else {
+            let alert = document.createElement('div');
+            alert.setAttribute("class", "alert alert-danger alert-dismissible");
+            let alertButton = document.createElement('button');
+            alertButton.setAttribute("type", "button");
+            alertButton.setAttribute("class", "btn-close");
+            alertButton.setAttribute("data-bs-dismiss", "alert");
+            let alertText = document.createTextNode("Failed to delete reservation");
+            alert.appendChild(alertButton);
+            alert.appendChild(alertText);
+            document.querySelector("#alertBox").appendChild(alert);
+        }
     }
 
 }
