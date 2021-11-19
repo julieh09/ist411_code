@@ -1,0 +1,26 @@
+POST /newuser/:userName
+This request allows the user to create a new username item. This username is used when logging in to the system.
+
+GET /login/:userName
+This request shows items with :userName. This is used to check if the user’s username matches that in the system in order for them to log in.
+
+GET /logout
+This request logs current user out of the system.
+
+GET /currentuser
+This request gets the user logged into the system currently.
+
+POST /createReservation/:laptop/:date/:time/:hoursMax
+This request creates a reservation based on user’s selected items such as laptop, reserving date, time, and number of hours renting. 
+
+POST /updateReservation/:newLaptop/:newDate/:newTime/:newHoursMax
+This request updates user’s existing reservation based on their selected items such as laptop, reserving date, time, and number of hours renting. 
+
+DELETE /deleteReservation 
+This request deletes user’s reservation from the system
+
+GET /viewReservation 
+This requests gets the reservation the user and displays it for view 
+
+GET /viewReservation 
+This requests gets the reservation of all existing users and displays it for view 
